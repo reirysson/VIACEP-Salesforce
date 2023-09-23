@@ -1,0 +1,26 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+
+	<aura:attribute name="spinner" type="boolean" default="false"/>
+
+    <lightning:card title="Criar Entrega">
+
+        <div class="slds-p-horizontal_small">
+            <lightning:recordEditForm aura:id="recordEditForm" objectApiName="Entrega__c" onsubmit="{!c.handleSubmit}" onsuccess="{!c.handleSuccess}">
+
+                <lightning:inputField aura:id="field" fieldName="Account__c" />
+                <lightning:inputField aura:id="field" fieldName="Observacao__c" />
+                <lightning:inputField aura:id="field" fieldName="Prioridade__c" />
+                <lightning:inputField aura:id="field" fieldName="TipoEntrega__c" />
+
+                <lightning:button class="slds-m-top_small" type="submit" label="Criar" />
+                <lightning:button class="slds-m-top_small" type="submit" onclick="{!c.handleReset}" label="Limpar" />
+            </lightning:recordEditForm>
+        </div>
+
+        <aura:if isTrue="{!v.spinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if> 
+
+    </lightning:card>
+    
+</aura:component>

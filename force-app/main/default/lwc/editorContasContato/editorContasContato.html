@@ -1,0 +1,136 @@
+<template>
+    <lightning-card 
+                   variant="Narrow" 
+                   title="Editor de contas" 
+                   icon-name="standard:account" 
+                   if:true={mostrarDados}>
+        <lightning-record-edit-form 
+                                   record-id={recordId} 
+                                   object-api-name={objectApiName} 
+                                   onsuccess={sucessMessageAccount}>
+            <lightning-messages></lightning-messages>
+            <div class="slds-page-header slds-page-header_record-home">
+                <div class="slds-page-header__row">
+                  <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                      <div class="slds-media__figure">
+                        <lightning-icon 
+                                       icon-name="standard:account" 
+                                       alternative-text="account" 
+                                       title="account">
+                        </lightning-icon>
+                      </div>
+                      <div class="slds-media__body">
+                        <div class="slds-page-header__name">
+                          <div class="slds-page-header__name-title">
+                            <h1>
+                              <span class="slds-page-header__title slds-truncate" title="Detalhes da conta">Detalhes da conta</span>
+                            </h1>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-page-header__row slds-page-header__row_gutters">
+                  <div class="slds-page-header__col-details">
+                    <ul class="slds-page-header__detail-row">
+                      <li class="slds-page-header__detail-block">
+                        <div class="slds-truncate" title="Nome da conta">
+                            <lightning-input-field field-name="Name" onchange={handleChange} ></lightning-input-field>
+                        </div>
+                      </li>
+                      <li class="slds-page-header__detail-block">
+                        <div class="slds-truncate" title="CEP da conta">
+                            <lightning-input-field field-name="BillingPostalCode" onchange={handleMaskCEP}></lightning-input-field>
+                        </div>
+                      </li>
+                      <li class="slds-page-header__detail-block">
+                        <div class="slds-truncate" title="Cidade">
+                            <lightning-input-field field-name="BillingCity"></lightning-input-field>
+                        </div>
+                      </li>
+                      <li class="slds-page-header__detail-block">
+                        <div class="slds-truncate" title="Estado">
+                            <lightning-input-field field-name="BillingState"></lightning-input-field>
+                        </div>
+                      </li>
+                      <li class="afastar-botao">
+                        <lightning-button
+                                         class="slds-m-top_small slds-align_absolute-center"
+                                         variant="brand"
+                                         type="submit"
+                                         label="Atualizar conta">
+                        </lightning-button> 
+                      </li>
+                    </ul>
+                  </div>  
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </lightning-card>
+
+    <div class="afastar-div">
+        <lightning-card 
+                       variant="Narrow" 
+                       title="Contatos da conta" 
+                       icon-name="standard:contact" 
+                       if:true={mostrarDados} 
+                       onsuccess={sucessMessageContact}>
+            <template for:each={listContas} for:item="item">
+                <lightning-record-edit-form key={item.Id} record-id={item.IdContato} object-api-name="Contact">
+                    <lightning-messages></lightning-messages>
+                    <div class="slds-page-header slds-page-header_record-home">
+                        <div class="slds-page-header__row">
+                          <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                              <div class="slds-media__figure">
+                                <lightning-icon icon-name="standard:contact" alternative-text="contact" title="contact"></lightning-icon>
+                              </div>
+                              <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                  <div class="slds-page-header__name-title">
+                                    <h1>
+                                      <span class="slds-page-header__title slds-truncate" title="Nome do contato">{item.NomeContato}</span>
+                                    </h1>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="slds-page-header__row slds-page-header__row_gutters">
+                          <div class="slds-page-header__col-details">
+                            <ul class="slds-page-header__detail-row">
+                              <li class="slds-page-header__detail-block">
+                                <div class="slds-truncate" title="Email do contato">
+                                    <lightning-input-field field-name="Email"></lightning-input-field>
+                                </div>
+                              </li>
+                              <li class="slds-page-header__detail-block">
+                                <div class="slds-truncate" title="CPF do contato">
+                                    <lightning-input-field field-name="CPF__c" onchange={handleMaskCPF}></lightning-input-field>
+                                </div>
+                              </li>
+                              <li class="slds-page-header__detail-block">
+                                <div class="slds-truncate" title="Telefone do contato">
+                                    <lightning-input-field field-name="Phone" onchange={handleMaskTelefone}></lightning-input-field>
+                                </div>      
+                              </li>
+                              <li class="afastar-botao">
+                                <lightning-button 
+                                                 class="slds-m-top_small slds-align_absolute-center" 
+                                                 variant="brand" 
+                                                 type="submit" 
+                                                 label="Atualizar contato">
+                                </lightning-button> 
+                              </li>
+                            </ul>
+                          </div>  
+                        </div>
+                    </div>
+                </lightning-record-edit-form>
+            </template>
+        </lightning-card>   
+    </div>
+</template>

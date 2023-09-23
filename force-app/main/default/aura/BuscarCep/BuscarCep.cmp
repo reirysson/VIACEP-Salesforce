@@ -1,0 +1,49 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="ViaCepCallout">
+    
+	<aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="cep" type="String"/>
+    <aura:attribute name="corpoCep" type="Object"/>
+  
+    <aura:html tag="style">
+    	.icone-pesquisar.slds-p-around_small.slds-size_6-of-12{
+        	margin-top: 27px; 
+        }
+    </aura:html>
+    
+    <div class="slds-modal__header">
+      <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Atualizar endereço</h1>
+    </div>
+    
+    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+    	<lightning:layout multipleRows="true">            
+            <lightning:layoutItem padding="around-small" size="6">                
+                <lightning:input name="cep" label="CEP" value="{!v.cep}"/>                                         
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="6" class="icone-pesquisar">
+                <lightning:buttonIcon 
+                    iconName="utility:search" 
+                    variant="bare" 
+                    alternativeText="pesquisar"
+                    onclick="{!c.buscarCep}"/>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="6">
+                <lightning:input name="cidade" label="Cidade" value="{!v.corpoCep.localidade}"/>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="6">
+                <lightning:input name="estado" label="Estado" value="{!v.corpoCep.uf}"/>
+            </lightning:layoutItem>   
+            
+            <lightning:layoutItem padding="around-small" size="6">
+                <lightning:input name="rua" label="Rua" value="{!v.corpoCep.logradouro}"/>
+            </lightning:layoutItem>     
+        </lightning:layout>
+    </div>
+    
+    <div class="slds-modal__footer">
+      <button class="slds-button slds-button_neutral" onclick="{!c.cancelar}">Cancelar</button>
+      <button class="slds-button slds-button_brand" onclick="{!c.salvarEndereco}">Salvar</button>
+    </div>    
+</aura:component>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>VerificandoTamanhoEmpresa</name>
+        <label>Verificando o Tamanho da Empresa</label>
+        <locationX>314</locationX>
+        <locationY>311</locationY>
+        <defaultConnector>
+            <targetReference>AtribuirEmpresaGrande</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Mais que dez mil</defaultConnectorLabel>
+        <rules>
+            <name>MenosMil</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NumberOfEmployees</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>1000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AtribuirEmpresaPequena</targetReference>
+            </connector>
+            <label>Menos que mil</label>
+        </rules>
+        <rules>
+            <name>MaisMilMenosDezMil</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.NumberOfEmployees</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.NumberOfEmployees</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>10000.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AtribuirEmpresaMedia</targetReference>
+            </connector>
+            <label>Mais que mil e menos que dez mil</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <interviewLabel>Exercício 2 - decisões {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Exercício 2 - decisões</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>AtribuirEmpresaGrande</name>
+        <label>Atribuir empresa grande</label>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>TamanhoEmpresa__c</field>
+            <value>
+                <stringValue>Grande</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AtribuirEmpresaMedia</name>
+        <label>Atribuir empresa média</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>TamanhoEmpresa__c</field>
+            <value>
+                <stringValue>Média</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AtribuirEmpresaPequena</name>
+        <label>Atribuir empresa pequena</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>TamanhoEmpresa__c</field>
+            <value>
+                <stringValue>Pequena</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>VerificandoTamanhoEmpresa</targetReference>
+        </connector>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
